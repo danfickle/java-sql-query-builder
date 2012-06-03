@@ -11,9 +11,9 @@ import com.github.danfickle.javasqlquerybuilder.QbInsert;
  * The default implementation of QbInsert.
  * @author DanFickle
  */
-public class QbInsertImp implements QbInsert 
+class QbInsertImp implements QbInsert 
 {
-	private QbInsertImp() { }
+	QbInsertImp() { }
 	private String m_table;
 	private Map<String, Integer> m_placeholders;
 	private List<QbField> m_fields;

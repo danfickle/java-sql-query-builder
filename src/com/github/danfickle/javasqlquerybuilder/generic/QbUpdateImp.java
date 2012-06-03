@@ -9,7 +9,7 @@ import com.github.danfickle.javasqlquerybuilder.QbField;
 import com.github.danfickle.javasqlquerybuilder.QbUpdate;
 import com.github.danfickle.javasqlquerybuilder.QbWhere;
 
-public class QbUpdateImp implements QbUpdate
+class QbUpdateImp implements QbUpdate
 {
 	private String m_table;
 	private Map<String, Integer> m_placeholders;
@@ -17,7 +17,7 @@ public class QbUpdateImp implements QbUpdate
 	private boolean m_all;
 	private QbWhere m_where;
 	
-	private QbUpdateImp() { }
+	QbUpdateImp() { }
 	
 	@Override
 	public String getQueryString()
