@@ -8,8 +8,8 @@ import com.github.danfickle.javasqlquerybuilder.QbQuery;
 import com.github.danfickle.javasqlquerybuilder.QbSelect;
 import com.github.danfickle.javasqlquerybuilder.QbUpdate;
 
-public class QbFactoryImp implements QbFactory {
-
+public class QbFactoryImp implements QbFactory
+{
 	private static QbField m_allField = new QbAllFieldImp();
 	
 	@Override
@@ -75,8 +75,7 @@ public class QbFactoryImp implements QbFactory {
 	@Override
 	public QbSelect newSelectQuery()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return new QbSelectImp();
 	}
 
 	@Override

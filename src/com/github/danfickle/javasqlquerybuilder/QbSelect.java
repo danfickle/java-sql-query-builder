@@ -43,7 +43,8 @@ public interface QbSelect extends QbQuery
 		OUTER,
 		INNER,
 		LEFT_OUTER,
-		RIGHT_OUTER
+		RIGHT_OUTER,
+		DEFAULT
 	}
 
 	/**
@@ -59,11 +60,12 @@ public interface QbSelect extends QbQuery
 	/**
 	 * Similar to {@link #join(String, QbField, QbField, QbJoinType) join}
 	 * but uses the db's default join type.
+	 * @param table - A table name without backticks.
 	 * @param field1 - A field to join on.
 	 * @param field2 - The second field to join on.
 	 * @return This query object.
 	 */
-	public QbSelect join(QbField field1, QbField field2);
+	public QbSelect join(String table, QbField field1, QbField field2);
 
 	/**
 	 * Takes a list of fields to group by.
