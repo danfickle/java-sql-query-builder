@@ -88,7 +88,7 @@ class QbInsertImp implements QbInsert
 			throw new IllegalArgumentException("Duplicate placeholder");
 		
 		m_fields.add(field);
-		m_placeholders.put(placeholder, m_placeholders.size());
+		m_placeholders.put(placeholder, m_placeholders.size() + 1);
 		return this;
 	}
 

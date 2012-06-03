@@ -6,6 +6,7 @@ import com.github.danfickle.javasqlquerybuilder.QbInsert;
 import com.github.danfickle.javasqlquerybuilder.QbSelect;
 import com.github.danfickle.javasqlquerybuilder.QbSelect.QbJoinType;
 import com.github.danfickle.javasqlquerybuilder.QbSelect.QbOrderBy;
+import com.github.danfickle.javasqlquerybuilder.QbWhere.QbWhereOperator;
 import com.github.danfickle.javasqlquerybuilder.generic.QbFactoryImp;
 
 /**
@@ -20,6 +21,7 @@ public class TestMain
 		insertTests(fac);
 		deleteTests(fac);
 		selectTests(fac);
+		placeholderTests(fac);
 	}
 
 	static void insertTests(QbFactory fac)
@@ -158,10 +160,58 @@ public class TestMain
 				.from("myTable")
 				.orderBy(QbOrderBy.ASC, fac.newStdField("col2"));
 		assert(select.getQueryString().equals("SELECT DISTINCT `col1` FROM `myTable`  ORDER BY `col2` ASC"));
-		
-		
-		System.out.println(select.getQueryString());
 	}
 
+	static void placeholderTests(QbFactory fac)
+	{
+		// Test the placeholder with a simple insert...
+		QbInsert ins = fac.newInsertQuery();
+		ins.set(fac.newStdField("test"), "test_placeholder");
+		ins.inTable("myTable");
+		assert(ins.getQueryString().equals("INSERT INTO `myTable` (`test`) VALUES (?)"));
+		assert(ins.getPlaceholderIndex("test_placeholder") == 1);
 
+		// Test the placeholders with multiple sets...
+		ins = fac.newInsertQuery();
+		ins.set(fac.newStdField("test1"), "holder1");
+		ins.set(fac.newStdField("test2"), "holder2");
+		ins.inTable("myTable");
+		assert(ins.getQueryString().equals("INSERT INTO `myTable` (`test1`, `test2`) VALUES (?, ?)"));
+		assert(ins.getPlaceholderIndex("holder1") == 1);
+		assert(ins.getPlaceholderIndex("holder2") == 2);		
+		
+		// Test the placeholders with a delete query...
+		QbDelete del = fac.newDeleteQuery();
+		del.from("myTable")
+			.where()
+			.where(fac.newStdField("test1"), "1")
+			.where(fac.newStdField("test2"), "2");
+		assert(del.getQueryString().equals("DELETE FROM `myTable` WHERE `test1` = ? AND `test2` = ?"));
+		assert(del.getPlaceholderIndex("1") == 1);
+		assert(del.getPlaceholderIndex("2") == 2);
+		
+		// Test the placeholders with a select query...
+		QbSelect sel = fac.newSelectQuery();
+		sel.distinct()
+			.select(fac.newStdField("test"))
+			.from("myTable")
+			.where()
+			.whereIn(fac.newStdField("test"), "test_placeholder", 4);
+		assert(sel.getQueryString().equals("SELECT DISTINCT `test` FROM `myTable`  WHERE `test` IN (?, ?, ?, ?)"));
+		assert(sel.getPlaceholderIndex("test_placeholder") == 1);
+		
+		// Test the placeholders with a complex select...
+		sel = fac.newSelectQuery();
+		sel.select(fac.newCount(fac.newStdField("test"), "cnt"))
+			.from("myTable")
+			.where()
+			.where(fac.newStdField("test"), QbWhereOperator.GREATER_THAN, "1");
+		sel.having()
+			.where(fac.newStdField("cnt"), QbWhereOperator.LESS_THAN, "2");
+		assert(sel.getQueryString().equals("SELECT COUNT(`test`) AS cnt FROM `myTable`  WHERE `test` > ? HAVING `cnt` < ?"));
+		assert(sel.getPlaceholderIndex("1") == 1);
+		//assert(sel.getPlaceholderIndex("2") == 2);
+		
+		System.out.println(sel.getQueryString() + sel.getPlaceholderIndex("2"));
+	}
 }
