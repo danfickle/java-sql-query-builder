@@ -41,18 +41,133 @@ class QbSelectImp implements QbSelect
 	private boolean m_distinct;
 	private String m_table;
 
+	private String joinTypeToString(QbJoinType joinType)
+	{
+		switch (joinType)
+		{
+		case DEFAULT:
+			return "";
+		case LEFT_OUTER:
+			return "LEFT OUTER";
+		case RIGHT_OUTER:
+			return "RIGHT OUTER";
+		case INNER:
+		case OUTER:
+		case LEFT:
+		case RIGHT:
+		default:
+			return joinType.toString();
+		}
+	}
+	
+	
 	@Override
 	public String getQueryString()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		StringBuilder builder = new StringBuilder("SELECT ");
+		
+		if (m_table == null)
+			throw new IllegalStateException("Must specify table");
+		
+		if (m_selectFields == null)
+			throw new IllegalStateException("Must specify some fields");
+		
+		if (m_distinct)
+			builder.append("DISTINCT ");
+		
+		int fieldCount = 0;
+		for (QbField field : m_selectFields)
+		{
+			builder.append(field.toString());
+			
+			if (fieldCount != m_selectFields.length - 1)
+			{
+				builder.append(',');
+				builder.append(' ');
+			}
+		}
+
+		builder.append(" FROM ");
+		builder.append(QbCommonImp.protectTableName(m_table));
+		builder.append(' ');
+		
+		if (m_where != null)
+			builder.append(m_where.toString());
+		
+		for (JoinInfo join : m_joinList)
+		{
+			String joinStr = joinTypeToString(join.joinType);
+			builder.append(joinStr);
+			builder.append(' ');
+			builder.append(QbCommonImp.protectTableName(join.table));
+			builder.append(" ON ");
+			builder.append(join.leftSide.toString());
+			builder.append(" = ");
+			builder.append(join.rightSide.toString());
+		}
+		
+		if (m_groupBy != null)
+		{
+			builder.append(" GROUP BY ");
+			
+			fieldCount = 0;
+			for (QbField field : m_groupBy)
+			{
+				builder.append(field.toString());
+
+				if (fieldCount != m_groupBy.length - 1)
+				{
+					builder.append(',');
+					builder.append(' ');
+				}
+			}
+		}
+
+		if (m_havingClause != null)
+			builder.append(m_havingClause.toString());
+		
+		if (m_orderBy != null)
+		{
+			builder.append(" ORDER BY ");
+			
+			fieldCount = 0;
+			for (QbField field : m_orderBy)
+			{
+				builder.append(field.toString());
+				
+				if (fieldCount != m_orderBy.length - 1)
+				{
+					builder.append(',');
+					builder.append(' ');
+				}
+			}
+
+			builder.append(m_orderByOrder.toString());
+		}
+		
+		if (m_haveLimit)
+		{
+			builder.append(" LIMIT ");
+			builder.append(m_offset);
+			builder.append(',');
+			builder.append(' ');
+			builder.append(m_limit);
+		}
+			
+		return builder.toString();
 	}
 
 	@Override
 	public int getPlaceholderIndex(String placeholderName)
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		int idx = 0;
+		if (m_havingClause != null)
+			idx = m_havingClause.getPlaceholderIndex(placeholderName);
+		
+		if (idx == 0 && m_where != null)
+			idx = m_where.getPlaceholderIndex(placeholderName);
+			
+		return idx;
 	}
 
 	@Override
