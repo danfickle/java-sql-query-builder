@@ -11,12 +11,27 @@ public interface QbWhere
 	 */
 	public enum QbWhereOperator
 	{
-		EQUALS,
-		NOT_EQUALS,
-		LESS_THAN,
-		GREATER_THAN,
-		LESS_THAN_EQUALS,
-		GREATER_THAN_EQUALS
+		EQUALS("="),
+		NOT_EQUALS("<>"),
+		LESS_THAN("<"),
+		GREATER_THAN(">"),
+		LESS_THAN_EQUALS("<="),
+		GREATER_THAN_EQUALS(">="),
+		LIKE("LIKE"),
+		NOT_LIKE("NOT LIKE");
+		
+		private final String value;
+		
+		QbWhereOperator(String val)
+		{
+			value = val;
+		}
+		
+		@Override
+		public String toString()
+		{
+			return value;
+		}
 	}
 	
 	/**
@@ -104,40 +119,6 @@ public interface QbWhere
 	 */
 	public QbWhere orWhereNotIn(QbField field, String placeholder, int count);
 
-	/**
-	 * Generates a like clause.
-	 * @param field
-	 * @param placeholder
-	 * @return This where builder.
-	 */
-	public QbWhere like(QbField field, String placeholder);
-
-	/**
-	 * Generates a like clause but joined to the rest of the where
-	 * clause with an OR.
-	 * @param field
-	 * @param placeholder
-	 * @return This where builder.
-	 */
-	public QbWhere orLike(QbField field, String placeholder);
-
-	/**
-	 * Generates a NOT LIKE clause.
-	 * @param field
-	 * @param placeholder
-	 * @return This where builder.
-	 */
-	public QbWhere notLike(QbField field, String placeholder);
-
-	/**
-	 * Generates a NOT LIKE clause joined to the rest of the clause
-	 * with an OR.
-	 * @param field
-	 * @param placeholder
-	 * @return This where builder.
-	 */
-	public QbWhere orNotLike(QbField field, String placeholder);
-	
 	/**
 	 * Adds an opening bracket.
 	 * @return This where builder.
