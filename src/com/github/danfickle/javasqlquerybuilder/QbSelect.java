@@ -75,10 +75,9 @@ public interface QbSelect extends QbQuery
 	
 	/**
 	 * The having clause for use with group_by.
-	 * @param havingClause - A QbWhere object that implements the having clause.
-	 * @return This query object.
+	 * @return A QbWhere object bound to the having clause of this query.
 	 */
-	public QbSelect having(QbWhere havingClause);
+	public QbWhere having();
 	
 	/**
 	 * Order ascending or descending. Use this rather than a boolean

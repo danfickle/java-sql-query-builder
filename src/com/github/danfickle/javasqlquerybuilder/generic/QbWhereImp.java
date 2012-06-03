@@ -8,7 +8,11 @@ import com.github.danfickle.javasqlquerybuilder.QbWhere;
 
 class QbWhereImp implements QbWhere
 {
-	QbWhereImp() { }
+	private boolean m_having;
+	QbWhereImp(boolean having) 
+	{
+		m_having = having;
+	}
 
 	private class WhereInfo
 	{
@@ -37,7 +41,7 @@ class QbWhereImp implements QbWhere
 	@Override
 	public String toString()
 	{
-		StringBuilder builder = new StringBuilder();
+		StringBuilder builder = new StringBuilder(m_having ? " HAVING " : " WHERE ");
 		
 		int fieldCnt = 0;
 		for (WhereInfo whereInfo : m_whereInfo)

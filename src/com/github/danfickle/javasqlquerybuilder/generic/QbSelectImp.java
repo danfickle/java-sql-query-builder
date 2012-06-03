@@ -95,16 +95,19 @@ class QbSelectImp implements QbSelect
 		if (m_where != null)
 			builder.append(m_where.toString());
 		
-		for (JoinInfo join : m_joinList)
+		if (m_joinList != null)
 		{
-			String joinStr = joinTypeToString(join.joinType);
-			builder.append(joinStr);
-			builder.append(' ');
-			builder.append(QbCommonImp.protectTableName(join.table));
-			builder.append(" ON ");
-			builder.append(join.leftSide.toString());
-			builder.append(" = ");
-			builder.append(join.rightSide.toString());
+			for (JoinInfo join : m_joinList)
+			{
+				String joinStr = joinTypeToString(join.joinType);
+				builder.append(joinStr);
+				builder.append(' ');
+				builder.append(QbCommonImp.protectTableName(join.table));
+				builder.append(" ON ");
+				builder.append(join.leftSide.toString());
+				builder.append(" = ");
+				builder.append(join.rightSide.toString());
+			}
 		}
 		
 		if (m_groupBy != null)
@@ -190,7 +193,7 @@ class QbSelectImp implements QbSelect
 	@Override
 	public QbWhere where()
 	{
-		m_where = new QbWhereImp();
+		m_where = new QbWhereImp(false);
 		return m_where;
 	}
 
@@ -230,10 +233,10 @@ class QbSelectImp implements QbSelect
 	}
 
 	@Override
-	public QbSelect having(QbWhere havingClause)
+	public QbWhere having()
 	{
-		m_havingClause = havingClause;
-		return this;
+		m_havingClause = new QbWhereImp(true);
+		return m_havingClause;
 	}
 
 	@Override

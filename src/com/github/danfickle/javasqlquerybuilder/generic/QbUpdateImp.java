@@ -86,7 +86,7 @@ class QbUpdateImp implements QbUpdate
 	@Override
 	public QbWhere where()
 	{
-		m_where = new QbWhereImp();
+		m_where = new QbWhereImp(false);
 		return m_where;
 	}
 
