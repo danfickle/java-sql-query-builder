@@ -37,10 +37,10 @@ class QbDeleteImp implements QbDelete
 	}
 
 	@Override
-	public QbDelete where(QbWhere where)
+	public QbWhere where()
 	{
-		m_where = where;
-		return this;
+		m_where = new QbWhereImp();
+		return m_where;
 	}
 
 	@Override

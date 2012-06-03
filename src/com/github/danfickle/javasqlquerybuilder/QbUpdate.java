@@ -16,10 +16,9 @@ public interface QbUpdate extends QbQuery
 	
 	/**
 	 * Adds a where clause. Very important.
-	 * @param where
-	 * @return This query builder.
+	 * @return A QbWhere object that is bound to this query.
 	 */
-	public QbUpdate where(QbWhere where);
+	public QbWhere where();
 	
 	/**
 	 * Signals that you want to update all records. If neither

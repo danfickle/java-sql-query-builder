@@ -21,11 +21,10 @@ public interface QbSelect extends QbQuery
 	public QbSelect from(String table);
 	
 	/**
-	 * Builds the where clause.
-	 * @param where - A QbWhere.
-	 * @return This query object.
+	 * Creates the where clause builder.
+	 * @return A mutable QbWhere that is bound to this query.
 	 */
-	public QbSelect where(QbWhere where);
+	public QbWhere where();
 	
 	/**
 	 * Whether to add the DISTINCT keyword.

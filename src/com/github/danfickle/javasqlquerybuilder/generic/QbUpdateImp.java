@@ -84,10 +84,10 @@ class QbUpdateImp implements QbUpdate
 	}
 
 	@Override
-	public QbUpdate where(QbWhere where)
+	public QbWhere where()
 	{
-		m_where = where;
-		return this;
+		m_where = new QbWhereImp();
+		return m_where;
 	}
 
 	@Override

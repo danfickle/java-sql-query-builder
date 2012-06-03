@@ -188,10 +188,10 @@ class QbSelectImp implements QbSelect
 	}
 
 	@Override
-	public QbSelect where(QbWhere where)
+	public QbWhere where()
 	{
-		m_where = where;
-		return this;
+		m_where = new QbWhereImp();
+		return m_where;
 	}
 
 	@Override

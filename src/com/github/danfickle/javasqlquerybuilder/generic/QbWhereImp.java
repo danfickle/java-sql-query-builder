@@ -203,5 +203,4 @@ class QbWhereImp implements QbWhere
 	{
 		return 0;
 	}
-
 }

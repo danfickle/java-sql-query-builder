@@ -8,10 +8,9 @@ public interface QbDelete extends QbQuery
 {
 	/**
 	 * Sets the WHERE clause.
-	 * @param where
-	 * @return This query builder.
+	 * @return A QbWhere object which is bound to this query.
 	 */
-	public QbDelete where(QbWhere where);
+	public QbWhere where();
 	
 	/**
 	 * Marks all records for deletion. Either this method
