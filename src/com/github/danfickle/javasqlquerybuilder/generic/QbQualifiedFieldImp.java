@@ -2,7 +2,7 @@ package com.github.danfickle.javasqlquerybuilder.generic;
 
 import com.github.danfickle.javasqlquerybuilder.QbField;
 
-public class QbQualifiedFieldImp implements QbField
+class QbQualifiedFieldImp implements QbField
 {
 	private final String m_table;
 	private final String m_field;

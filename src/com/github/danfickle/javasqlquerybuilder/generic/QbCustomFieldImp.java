@@ -2,7 +2,7 @@ package com.github.danfickle.javasqlquerybuilder.generic;
 
 import com.github.danfickle.javasqlquerybuilder.QbField;
 
-public class QbCustomFieldImp implements QbField
+class QbCustomFieldImp implements QbField
 {
 	private final String m_custom;
 	
