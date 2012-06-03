@@ -149,4 +149,13 @@ public interface QbWhere
 	 * @return This where builder.
 	 */
 	public QbWhere endBracket();
+	
+	/**
+	 * Gets the placeholder index. Usually you don't call this
+	 * directly and get the placeholder index from the QbQuery which 
+	 * will check its own placeholders as well as those from any where clause.
+	 * @param placeholderName
+	 * @return The placeholder index.
+	 */
+	public int getPlaceholderIndex(String placeholderName);
 }

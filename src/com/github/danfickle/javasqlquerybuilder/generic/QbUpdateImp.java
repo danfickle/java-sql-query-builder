@@ -47,7 +47,9 @@ class QbUpdateImp implements QbUpdate
 			fieldCnt++;
 		}
 		
-		builder.append(m_where.toString());
+		if (m_where != null)
+			builder.append(m_where.toString());
+
 		return builder.toString();
 	}
 
