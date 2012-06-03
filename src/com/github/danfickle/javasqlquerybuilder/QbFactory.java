@@ -6,7 +6,7 @@ package com.github.danfickle.javasqlquerybuilder;
  * Concretely implemented by a class for each database. 
  * @author DanFickle
  */
-public interface Factory
+public interface QbFactory
 {
 	/**
 	 * Creates an all fields selector.
