@@ -139,4 +139,9 @@ public interface QbWhere
 	 * @return The placeholder index.
 	 */
 	public int getPlaceholderIndex(String placeholderName);
+	
+	/**
+	 * Gets the number of placeholders.
+	 */
+	public int getPlaceholderCount();
 }

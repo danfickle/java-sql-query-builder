@@ -11,9 +11,10 @@ import com.github.danfickle.javasqlquerybuilder.QbWhere;
 class QbWhereImp implements QbWhere
 {
 	private boolean m_having;
-	QbWhereImp(boolean having) 
+	QbWhereImp(boolean having, int placeholderOffset) 
 	{
 		m_having = having;
+		m_placeholderCnt = placeholderOffset;
 	}
 
 	private class WhereInfo
@@ -40,7 +41,7 @@ class QbWhereImp implements QbWhere
 
 	private List<WhereInfo> m_whereInfo = new ArrayList<WhereInfo>(4);
 	private Map<String, Integer> m_placeholders = new HashMap<String, Integer>();
-	private int placeholderCnt = 1;
+	private int m_placeholderCnt = 1;
 
 	@Override
 	public String toString()
@@ -106,8 +107,8 @@ class QbWhereImp implements QbWhere
 	{
 		WhereInfo whereInfo = new WhereInfo(field, QbWhereOperator.EQUALS);
 		m_whereInfo.add(whereInfo);
-		m_placeholders.put(placeholder, placeholderCnt);
-		placeholderCnt++;
+		m_placeholders.put(placeholder, m_placeholderCnt);
+		m_placeholderCnt++;
 		return this;
 	}
 
@@ -116,8 +117,8 @@ class QbWhereImp implements QbWhere
 	{
 		WhereInfo whereInfo = new WhereInfo(field, op);
 		m_whereInfo.add(whereInfo);
-		m_placeholders.put(placeholder, placeholderCnt);
-		placeholderCnt++;
+		m_placeholders.put(placeholder, m_placeholderCnt);
+		m_placeholderCnt++;
 		return this;
 	}
 
@@ -127,8 +128,8 @@ class QbWhereImp implements QbWhere
 		WhereInfo whereInfo = new WhereInfo(field, QbWhereOperator.EQUALS);
 		whereInfo.m_orClause = true;
 		m_whereInfo.add(whereInfo);
-		m_placeholders.put(placeholder, placeholderCnt);
-		placeholderCnt++;
+		m_placeholders.put(placeholder, m_placeholderCnt);
+		m_placeholderCnt++;
 		return this;
 	}
 
@@ -138,8 +139,8 @@ class QbWhereImp implements QbWhere
 		WhereInfo whereInfo = new WhereInfo(field, op);
 		whereInfo.m_orClause = true;
 		m_whereInfo.add(whereInfo);
-		m_placeholders.put(placeholder, placeholderCnt);
-		placeholderCnt++;
+		m_placeholders.put(placeholder, m_placeholderCnt);
+		m_placeholderCnt++;
 		return this;
 	}
 
@@ -159,8 +160,8 @@ class QbWhereImp implements QbWhere
 		whereInfo.m_field = field;
 		whereInfo.m_inCount = count;
 		m_whereInfo.add(whereInfo);
-		m_placeholders.put(placeholder, placeholderCnt);
-		placeholderCnt += count;
+		m_placeholders.put(placeholder, m_placeholderCnt);
+		m_placeholderCnt += count;
 		return this;
 	}
 
@@ -172,8 +173,8 @@ class QbWhereImp implements QbWhere
 		whereInfo.m_inCount = count;
 		whereInfo.m_orClause = true;
 		m_whereInfo.add(whereInfo);
-		m_placeholders.put(placeholder, placeholderCnt);
-		placeholderCnt += count;
+		m_placeholders.put(placeholder, m_placeholderCnt);
+		m_placeholderCnt += count;
 		return this;
 	}
 
@@ -185,8 +186,8 @@ class QbWhereImp implements QbWhere
 		whereInfo.m_inCount = count;
 		whereInfo.m_notIn = true;
 		m_whereInfo.add(whereInfo);
-		m_placeholders.put(placeholder, placeholderCnt);
-		placeholderCnt += count;
+		m_placeholders.put(placeholder, m_placeholderCnt);
+		m_placeholderCnt += count;
 		return this;
 	}
 
@@ -199,8 +200,8 @@ class QbWhereImp implements QbWhere
 		whereInfo.m_notIn = true;
 		whereInfo.m_orClause = true;
 		m_whereInfo.add(whereInfo);
-		m_placeholders.put(placeholder, placeholderCnt);
-		placeholderCnt += count;
+		m_placeholders.put(placeholder, m_placeholderCnt);
+		m_placeholderCnt += count;
 		return this;
 	}
 
@@ -231,5 +232,11 @@ class QbWhereImp implements QbWhere
 			return 0;
 		else
 			return idx;
+	}
+	
+	@Override
+	public int getPlaceholderCount()
+	{
+		return m_placeholders.size();
 	}
 }

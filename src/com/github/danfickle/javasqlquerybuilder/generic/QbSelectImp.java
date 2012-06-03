@@ -195,7 +195,7 @@ class QbSelectImp implements QbSelect
 	@Override
 	public QbWhere where()
 	{
-		m_where = new QbWhereImp(false);
+		m_where = new QbWhereImp(false, 1);
 		return m_where;
 	}
 
@@ -237,7 +237,7 @@ class QbSelectImp implements QbSelect
 	@Override
 	public QbWhere having()
 	{
-		m_havingClause = new QbWhereImp(true);
+		m_havingClause = new QbWhereImp(true, m_where == null ? 1 : m_where.getPlaceholderCount() + 1);
 		return m_havingClause;
 	}
 

@@ -210,7 +210,7 @@ public class TestMain
 			.where(fac.newStdField("cnt"), QbWhereOperator.LESS_THAN, "2");
 		assert(sel.getQueryString().equals("SELECT COUNT(`test`) AS cnt FROM `myTable`  WHERE `test` > ? HAVING `cnt` < ?"));
 		assert(sel.getPlaceholderIndex("1") == 1);
-		//assert(sel.getPlaceholderIndex("2") == 2);
+		assert(sel.getPlaceholderIndex("2") == 2);
 		
 		System.out.println(sel.getQueryString() + sel.getPlaceholderIndex("2"));
 	}

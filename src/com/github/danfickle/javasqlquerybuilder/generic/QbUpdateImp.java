@@ -79,14 +79,14 @@ class QbUpdateImp implements QbUpdate
 			throw new IllegalArgumentException("Duplicate placeholder");
 		
 		m_fields.add(field);
-		m_placeholders.put(placeholder, m_placeholders.size());
+		m_placeholders.put(placeholder, m_placeholders.size() + 1);
 		return this;
 	}
 
 	@Override
 	public QbWhere where()
 	{
-		m_where = new QbWhereImp(false);
+		m_where = new QbWhereImp(false, m_placeholders == null ? 1 : m_placeholders.size() + 1);
 		return m_where;
 	}
 

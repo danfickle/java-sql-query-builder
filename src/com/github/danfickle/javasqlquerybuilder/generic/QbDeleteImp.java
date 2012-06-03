@@ -39,7 +39,7 @@ class QbDeleteImp implements QbDelete
 	@Override
 	public QbWhere where()
 	{
-		m_where = new QbWhereImp(false);
+		m_where = new QbWhereImp(false, 1);
 		return m_where;
 	}
 
