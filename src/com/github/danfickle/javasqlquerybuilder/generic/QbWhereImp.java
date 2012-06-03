@@ -66,6 +66,7 @@ class QbWhereImp implements QbWhere
 			if (whereInfo.m_custom != null)
 			{
 				builder.append(whereInfo.m_custom);
+				fieldCnt++;
 				continue;
 			}
 			

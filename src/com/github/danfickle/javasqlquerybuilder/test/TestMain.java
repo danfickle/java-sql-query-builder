@@ -22,6 +22,7 @@ public class TestMain
 		deleteTests(fac);
 		selectTests(fac);
 		placeholderTests(fac);
+		whereTests(fac);
 	}
 
 	static void insertTests(QbFactory fac)
@@ -211,7 +212,29 @@ public class TestMain
 		assert(sel.getQueryString().equals("SELECT COUNT(`test`) AS cnt FROM `myTable`  WHERE `test` > ? HAVING `cnt` < ?"));
 		assert(sel.getPlaceholderIndex("1") == 1);
 		assert(sel.getPlaceholderIndex("2") == 2);
+	}
+
+	static void whereTests(QbFactory fac)
+	{
+		// Test or where clause...
+		QbSelect sel = fac.newSelectQuery();
+		sel.select(fac.newStdField("test"))
+			.from("myTable")
+			.where()
+			.where(fac.newStdField("test"), QbWhereOperator.NOT_EQUALS, "1")
+			.orWhere(fac.newStdField("test2"), "2");
+		assert(sel.getQueryString().equals("SELECT `test` FROM `myTable`  WHERE `test` <> ? OR `test2` = ?"));
+		assert(sel.getPlaceholderIndex("2") == 2);
 		
-		System.out.println(sel.getQueryString() + sel.getPlaceholderIndex("2"));
+		// Test custom where clause and where not in...
+		sel = fac.newSelectQuery();
+		sel.select(fac.newStdField("test"))
+			.from("myTable")
+			.where()
+			.where("x = y")
+			.whereNotIn(fac.newStdField("test"), "2", 10)
+			.orWhereNotIn(fac.newStdField("test2"), "3", 5);
+		assert(sel.getQueryString().equals("SELECT `test` FROM `myTable`  WHERE x = y AND `test` NOT IN (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) OR `test2` NOT IN (?, ?, ?, ?, ?)"));
+		assert(sel.getPlaceholderIndex("3") == 11);
 	}
 }
