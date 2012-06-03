@@ -41,37 +41,47 @@ public interface QbFactory
 	/**
 	 * Creates a SUM aggregate function on the specified field.
 	 * @param field - Returned by newStdField.
+	 * @param alias - A string to use with AS. May be null
+	 * in which case no AS is used.
 	 * @return QbField
 	 */
-	public QbField newSum(QbField field);
+	public QbField newSum(QbField field, String alias);
 
 	/**
 	 * Creates a count aggregate function on the specified field.
 	 * @param field - Returned by newStdField.
+	 * @param alias - A string to use with AS. May be null
+	 * in which case no AS is used.
 	 * @return Field
 	 */
-	public QbField newCount(QbField field);
+	public QbField newCount(QbField field, String alias);
 	
 	/**
 	 * Creates an average aggregate function on the specified field.
 	 * @param field - Returned by newStdField.
+	 * @param alias - A string to use with AS. May be null
+	 * in which case no AS is used.
 	 * @return QbField
 	 */
-	public QbField newAvg(QbField field);
+	public QbField newAvg(QbField field, String alias);
 	
 	/**
 	 * Creates a minimum function on the specified field.
 	 * @param field - Returned by newStdField.
+	 * @param alias - A string to use with AS. May be null
+	 * in which case no AS is used.
 	 * @return QbField
 	 */
-	public QbField newMin(QbField field);
+	public QbField newMin(QbField field, String alias);
 	
 	/**
 	 * Creates a count aggregate function on the specified field.
 	 * @param field - Returned by newStdField.
+	 * @param alias - A string to use with AS. May be null
+	 * in which case no AS is used.
 	 * @return QbField
 	 */
-	public QbField newMax(QbField field);
+	public QbField newMax(QbField field, String alias);
 	
 	/**
 	 * Creates a custom field.
