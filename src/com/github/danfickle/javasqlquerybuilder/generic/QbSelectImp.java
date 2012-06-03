@@ -92,16 +92,14 @@ class QbSelectImp implements QbSelect
 		builder.append(QbCommonImp.protectTableName(m_table));
 		builder.append(' ');
 		
-		if (m_where != null)
-			builder.append(m_where.toString());
-		
+	
 		if (m_joinList != null)
 		{
 			for (JoinInfo join : m_joinList)
 			{
 				String joinStr = joinTypeToString(join.joinType);
 				builder.append(joinStr);
-				builder.append(' ');
+				builder.append(" JOIN ");
 				builder.append(QbCommonImp.protectTableName(join.table));
 				builder.append(" ON ");
 				builder.append(join.leftSide.toString());
@@ -109,6 +107,9 @@ class QbSelectImp implements QbSelect
 				builder.append(join.rightSide.toString());
 			}
 		}
+
+		if (m_where != null)
+			builder.append(m_where.toString());
 		
 		if (m_groupBy != null)
 		{
@@ -124,8 +125,8 @@ class QbSelectImp implements QbSelect
 					builder.append(',');
 					builder.append(' ');
 				}
+				fieldCount++;
 			}
-			fieldCount++;
 		}
 
 		if (m_havingClause != null)
@@ -148,6 +149,7 @@ class QbSelectImp implements QbSelect
 				fieldCount++;
 			}
 
+			builder.append(' ');
 			builder.append(m_orderByOrder.toString());
 		}
 		
