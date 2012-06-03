@@ -33,8 +33,7 @@ public class QbFactoryImp implements QbFactory {
 	@Override
 	public QbField newQualifiedField(String table, String name)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return new QbQualifiedFieldImp(table, name);
 	}
 
 	@Override
@@ -70,8 +69,7 @@ public class QbFactoryImp implements QbFactory {
 	@Override
 	public QbField newCustomField(String custom)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return new QbCustomFieldImp(custom);
 	}
 
 	@Override
@@ -90,8 +88,7 @@ public class QbFactoryImp implements QbFactory {
 	@Override
 	public QbDelete newDeleteQuery()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return new QbDeleteImp();
 	}
 
 	@Override
