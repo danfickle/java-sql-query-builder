@@ -81,10 +81,24 @@ public interface QbFactory
 	public QbField newCustomField(String custom);
 	
 	/**
-	 * Creates a query object.
-	 * @return QbQuery
+	 * Creates a SELECT query. 
 	 */
-	public QbQuery newQuery();
+	public QbSelect newSelectQuery();
+
+	/**
+	 * Creates an UPDATE query.
+	 */
+	public QbUpdate newUpdateQuery();
+
+	/**
+	 * Creates a DELETE query.
+	 */
+	public QbDelete newDeleteQuery();
+
+	/**
+	 * Creates an INSERT query.
+	 */
+	public QbInsert newInsertQuery();
 	
 	/**
 	 * Creates a query object with the given sql.
