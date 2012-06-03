@@ -84,7 +84,6 @@ public interface QbWhere
 	 */
 	public QbWhere orWhereIn(QbField field, String placeholder, int count);
 
-	
 	/**
 	 * Similar to {@link #whereIn(QbField, String, int) whereIn} but generates
 	 * a NOT IN clause.
@@ -138,4 +137,16 @@ public interface QbWhere
 	 * @return This where builder.
 	 */
 	public QbWhere orNotLike(QbField field, String placeholder);
+	
+	/**
+	 * Adds an opening bracket.
+	 * @return This where builder.
+	 */
+	public QbWhere startBracket(); 
+
+	/**
+	 * Adds an ending bracket.
+	 * @return This where builder.
+	 */
+	public QbWhere endBracket();
 }
