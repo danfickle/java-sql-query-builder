@@ -100,8 +100,6 @@ public class QbFactoryImp implements QbFactory {
 	@Override
 	public QbQuery newQuery(String sql)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return new QbCustomQuery(sql);
 	}
-
 }
