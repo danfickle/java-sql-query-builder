@@ -10,17 +10,18 @@ import com.github.danfickle.javasqlquerybuilder.QbUpdate;
 
 public class QbFactoryImp implements QbFactory {
 
+	private static QbField m_allField = new QbAllFieldImp();
+	
 	@Override
 	public QbField newAllField()
 	{
-		return null;
+		return m_allField;
 	}
 
 	@Override
 	public QbField newAllField(String table)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return new QbAllTableFieldImp(table);
 	}
 
 	@Override
