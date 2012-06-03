@@ -8,16 +8,12 @@ public class TestMain
 {
 	public static void main(String... args)
 	{
-		QbFactory factory = new QbFactoryImp();
-		QbInsert insert = factory.newInsertQuery();
+		QbFactory fac = new QbFactoryImp();
+		QbInsert insert = fac.newInsertQuery();
 
-		insert.set(factory.newStdField("col"), "one");
+		insert.set(fac.newStdField("col"), "one");
+		insert.set(fac.newStdField("col2"), "two");
 		insert.inTable("myTable");
 		System.out.println(insert.getQueryString());
 	}
-	
-	
-	
-	
-	
 }

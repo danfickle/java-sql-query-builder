@@ -85,6 +85,7 @@ class QbSelectImp implements QbSelect
 				builder.append(',');
 				builder.append(' ');
 			}
+			fieldCount++;
 		}
 
 		builder.append(" FROM ");
@@ -121,6 +122,7 @@ class QbSelectImp implements QbSelect
 					builder.append(' ');
 				}
 			}
+			fieldCount++;
 		}
 
 		if (m_havingClause != null)
@@ -140,6 +142,7 @@ class QbSelectImp implements QbSelect
 					builder.append(',');
 					builder.append(' ');
 				}
+				fieldCount++;
 			}
 
 			builder.append(m_orderByOrder.toString());

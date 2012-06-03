@@ -54,6 +54,7 @@ class QbInsertImp implements QbInsert
 				builder.append(',');
 				builder.append(' ');
 			}
+			fieldCnt++;
 		}
 
 		builder.append(')');
