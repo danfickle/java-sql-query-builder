@@ -26,6 +26,7 @@ class QbInsertImp implements QbInsert
 		
 		StringBuilder builder = new StringBuilder("INSERT INTO ");
 		builder.append(QbCommonImp.protectTableName(m_table));
+		builder.append(' ');
 		builder.append('(');
 		
 		int fieldCnt = 0;
@@ -43,11 +44,16 @@ class QbInsertImp implements QbInsert
 
 		builder.append(") VALUES (");
 		
+		fieldCnt = 0;
 		for (int i = 0; i < m_fields.size(); i++)
 		{
 			builder.append('?');
-			builder.append(',');
-			builder.append(' ');
+
+			if (fieldCnt != m_fields.size() - 1)
+			{
+				builder.append(',');
+				builder.append(' ');
+			}
 		}
 
 		builder.append(')');
