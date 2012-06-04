@@ -6,6 +6,7 @@ import com.github.danfickle.javasqlquerybuilder.QbInsert;
 import com.github.danfickle.javasqlquerybuilder.QbSelect;
 import com.github.danfickle.javasqlquerybuilder.QbSelect.QbJoinType;
 import com.github.danfickle.javasqlquerybuilder.QbSelect.QbOrderBy;
+import com.github.danfickle.javasqlquerybuilder.QbUpdate;
 import com.github.danfickle.javasqlquerybuilder.QbWhere.QbWhereOperator;
 import com.github.danfickle.javasqlquerybuilder.generic.QbFactoryImp;
 
@@ -23,6 +24,7 @@ public class TestMain
 		selectTests(fac);
 		placeholderTests(fac);
 		whereTests(fac);
+		updateTests(fac);
 	}
 
 	static void insertTests(QbFactory fac)
@@ -236,5 +238,48 @@ public class TestMain
 			.orWhereNotIn(fac.newStdField("test2"), "3", 5);
 		assert(sel.getQueryString().equals("SELECT `test` FROM `myTable`  WHERE x = y AND `test` NOT IN (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) OR `test2` NOT IN (?, ?, ?, ?, ?)"));
 		assert(sel.getPlaceholderIndex("3") == 11);
+		
+		// Test LIKE clause...
+		sel = fac.newSelectQuery();
+		sel.select(fac.newStdField("col1"))
+			.from("myTable")
+			.where()
+			.where(fac.newStdField("col2"), QbWhereOperator.LIKE, ":col2");
+		assert(sel.getQueryString().equals("SELECT `col1` FROM `myTable`  WHERE `col2` LIKE ?"));
+		assert(sel.getPlaceholderIndex(":col2") == 1);
+		
+		// Test OR NOT LIKE clause...
+		sel = fac.newSelectQuery();
+		sel.select(fac.newStdField("col1"), fac.newStdField("col2"))
+			.from("myTable")
+			.where()
+			.where(fac.newStdField("col2"), ":col2")
+			.orWhere(fac.newStdField("col3"), QbWhereOperator.NOT_LIKE, ":col3");
+		assert(sel.getQueryString().equals("SELECT `col1`, `col2` FROM `myTable`  WHERE `col2` = ? OR `col3` NOT LIKE ?"));
+		assert(sel.getPlaceholderIndex(":col2") == 1);
+		assert(sel.getPlaceholderIndex(":col3") == 2);
+	}
+	
+	static void updateTests(QbFactory f)
+	{
+		// Test a simple update query...
+		QbUpdate up = f.newUpdateQuery();
+		up.set(f.newStdField("first_name"), ":first_name")
+			.set(f.newStdField("last_name"), ":last_name")
+			.inTable("myTable")
+			.where()
+			.where(f.newStdField("id"), ":id");
+		assert(up.getQueryString().equals("UPDATE `myTable` SET `first_name` = ?, `last_name` = ? WHERE `id` = ?"));
+		assert(up.getPlaceholderIndex(":first_name") == 1);
+		assert(up.getPlaceholderIndex(":last_name") == 2);
+		assert(up.getPlaceholderIndex(":id") == 3);
+
+		// Test an update of all records...
+		up = f.newUpdateQuery();
+		up.set(f.newStdField("gender"), ":gender")
+			.inTable("myTable")
+			.all();
+		assert(up.getQueryString().equals("UPDATE `myTable` SET `gender` = ?"));
+		assert(up.getPlaceholderIndex(":gender") == 1);
 	}
 }

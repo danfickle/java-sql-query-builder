@@ -36,7 +36,7 @@ class QbUpdateImp implements QbUpdate
 		for (QbField field : m_fields)
 		{
 			builder.append(field.toString());
-			builder.append("=?");
+			builder.append(" = ?");
 
 			if (fieldCnt != m_fields.size() - 1)
 				builder.append(", ");
@@ -58,9 +58,12 @@ class QbUpdateImp implements QbUpdate
 		Integer idx = m_placeholders.get(placeholderName);
 		
 		if (idx == null)
-			throw new IllegalArgumentException("Placeholder doesn't exist");
-		else
-			return idx;
+		{
+			idx = m_where.getPlaceholderIndex(placeholderName);
+			if (idx == null)
+				throw new IllegalArgumentException("Placeholder doesn't exist");
+		}
+		return idx;
 	}
 
 	@Override
