@@ -7,7 +7,8 @@ package com.github.danfickle.javasqlquerybuilder;
 public interface QbUpdate extends QbQuery
 {
 	/**
-	 * Sets a field to the specified placeholder.
+	 * Sets a field to the specified placeholder. May be called 
+	 * multiple times.
 	 * @param field
 	 * @param placeholder
 	 * @return This query builder.
@@ -15,7 +16,8 @@ public interface QbUpdate extends QbQuery
 	public QbUpdate set(QbField field, String placeholder);
 	
 	/**
-	 * Adds a where clause. Very important.
+	 * Adds a where clause. Very important. Call only once
+	 * per QbUpdate object.
 	 * @return A QbWhere object that is bound to this query.
 	 */
 	public QbWhere where();
@@ -29,7 +31,7 @@ public interface QbUpdate extends QbQuery
 	
 	/**
 	 * Which table to update. Table name should not contain
-	 * backticks.
+	 * backticks. Must be called to make a valid update query.
 	 * @param table
 	 * @return This query builder.
 	 */

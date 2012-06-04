@@ -20,7 +20,8 @@ public interface QbDelete extends QbQuery
 	public QbDelete all();
 	
 	/**
-	 * The table you want to delete from.
+	 * The table you want to delete from. Must be called to make
+	 * a valid delete statement.
 	 * @param table - A table name without backticks.
 	 * @return This query builder.
 	 */

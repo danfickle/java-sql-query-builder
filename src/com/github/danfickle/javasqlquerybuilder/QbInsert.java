@@ -15,7 +15,8 @@ public interface QbInsert extends QbQuery
 	public QbInsert set(QbField field, String placeholder);
 	
 	/**
-	 * Sets the table to insert into.
+	 * Sets the table to insert into. Must be called to make a valid insert
+	 * statement.
 	 * @param table
 	 * @return This query builder.
 	 */

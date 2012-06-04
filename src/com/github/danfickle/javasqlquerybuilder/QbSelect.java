@@ -7,27 +7,30 @@ package com.github.danfickle.javasqlquerybuilder;
 public interface QbSelect extends QbQuery
 {
 	/**
-	 * Sets the list of fields to select from.
+	 * Sets the list of fields to select from. Call only once per
+	 * QbSelect object.
 	 * @param fields
 	 * @return This query object.
 	 */
 	public QbSelect select(QbField...fields);
 
 	/**
-	 * Which table to get records from? 
+	 * Which table to get records from? Call only once per
+	 * QbSelect object. 
 	 * @param table
 	 * @return This query object.
 	 */
 	public QbSelect from(String table);
 	
 	/**
-	 * Creates the where clause builder.
+	 * Creates the where clause builder. This must be called before any
+	 * call to having(). Call only once per QbSelect object.
 	 * @return A mutable QbWhere that is bound to this query.
 	 */
 	public QbWhere where();
 	
 	/**
-	 * Whether to add the DISTINCT keyword.
+	 * Adds the DISTINCT keyword.
 	 * @return This query object.
 	 */
 	public QbSelect distinct();
@@ -47,7 +50,7 @@ public interface QbSelect extends QbQuery
 	}
 
 	/**
-	 * Join the table to this query.
+	 * Join the table to this query. May be called multiple times.
 	 * @param table - A table name without backticks.
 	 * @param field1 - A field to join on.
 	 * @param field2 - The second field to join on.
@@ -58,7 +61,7 @@ public interface QbSelect extends QbQuery
 	
 	/**
 	 * Similar to {@link #join(String, QbField, QbField, QbJoinType) join}
-	 * but uses the db's default join type.
+	 * but uses the db's default join type. May be called multiple times.
 	 * @param table - A table name without backticks.
 	 * @param field1 - A field to join on.
 	 * @param field2 - The second field to join on.
@@ -67,14 +70,16 @@ public interface QbSelect extends QbQuery
 	public QbSelect join(String table, QbField field1, QbField field2);
 
 	/**
-	 * Takes a list of fields to group by.
+	 * Takes a list of fields to group by. Call only once per
+	 * QbSelect object.
 	 * @param fields - The fields to group by.
 	 * @return This query object.
 	 */
 	public QbSelect groupBy(QbField... fields);
 	
 	/**
-	 * The having clause for use with group_by.
+	 * The having clause for use with group_by. This MUST be called after any
+	 * call to where(). Call only once per QbSelect object.
 	 * @return A QbWhere object bound to the having clause of this query.
 	 */
 	public QbWhere having();
@@ -90,7 +95,8 @@ public interface QbSelect extends QbQuery
 	}
 	
 	/**
-	 * Used to make the ORDER BY clause.
+	 * Used to make the ORDER BY clause. Call only once
+	 * per QbSelect object.
 	 * @param order - ASC or DESC.
 	 * @param fields - A list of fields to order by.
 	 * @return This query object.

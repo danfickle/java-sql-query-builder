@@ -18,7 +18,7 @@ public interface QbQuery
 	/**
 	 * Gets the index of a placeholder.
 	 * @param placeholderName - The name of the placeholder value.
-	 * @return An integer that can be passed to
+	 * @return An integer (starting at 1) that can be passed to
 	 * PreparedStatement::set* functions.
 	 */
 	public int getPlaceholderIndex(String placeholderName);
