@@ -60,7 +60,7 @@ class QbUpdateImp implements QbUpdate
 		if (idx == null)
 		{
 			idx = m_where.getPlaceholderIndex(placeholderName);
-			if (idx == null)
+			if (idx == 0)
 				throw new IllegalArgumentException("Placeholder doesn't exist");
 		}
 		return idx;
