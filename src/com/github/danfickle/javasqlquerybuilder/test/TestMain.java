@@ -216,7 +216,7 @@ public class TestMain
 
 	static void whereTests(QbFactory fac)
 	{
-		// Test or where clause...
+		// Test of where clause...
 		QbSelect sel = fac.newSelectQuery();
 		sel.select(fac.newStdField("test"))
 			.from("myTable")

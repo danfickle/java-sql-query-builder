@@ -2,6 +2,10 @@ package com.github.danfickle.javasqlquerybuilder.generic;
 
 import com.github.danfickle.javasqlquerybuilder.QbQuery;
 
+/** 
+ * Immutable class to implement a custom query.
+ * @author DanFickle
+ */
 class QbCustomQuery implements QbQuery 
 {
 	private final String m_sql;

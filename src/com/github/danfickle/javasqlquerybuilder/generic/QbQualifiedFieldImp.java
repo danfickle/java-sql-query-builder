@@ -2,6 +2,10 @@ package com.github.danfickle.javasqlquerybuilder.generic;
 
 import com.github.danfickle.javasqlquerybuilder.QbField;
 
+/**
+ * Immutable class to implement qualified fields.
+ * @author DanFickle
+ */
 class QbQualifiedFieldImp implements QbField
 {
 	private final String m_table;

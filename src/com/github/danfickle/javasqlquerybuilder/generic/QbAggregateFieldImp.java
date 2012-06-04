@@ -2,6 +2,10 @@ package com.github.danfickle.javasqlquerybuilder.generic;
 
 import com.github.danfickle.javasqlquerybuilder.QbField;
 
+/**
+ * Immutable class to implement aggregate functions.
+ * @author DanFickle
+ */
 class QbAggregateFieldImp implements QbField
 {
 	private final QbField m_child;

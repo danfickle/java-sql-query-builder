@@ -75,19 +75,7 @@ class QbSelectImp implements QbSelect
 		if (m_distinct)
 			builder.append("DISTINCT ");
 		
-		int fieldCount = 0;
-		for (QbField field : m_selectFields)
-		{
-			builder.append(field.toString());
-			
-			if (fieldCount != m_selectFields.length - 1)
-			{
-				builder.append(',');
-				builder.append(' ');
-			}
-			fieldCount++;
-		}
-
+		QbCommonImp.joinFieldNames(builder, m_selectFields);
 		builder.append(" FROM ");
 		builder.append(QbCommonImp.protectTableName(m_table));
 		builder.append(' ');
@@ -97,8 +85,7 @@ class QbSelectImp implements QbSelect
 		{
 			for (JoinInfo join : m_joinList)
 			{
-				String joinStr = joinTypeToString(join.joinType);
-				builder.append(joinStr);
+				builder.append(joinTypeToString(join.joinType));
 				builder.append(" JOIN ");
 				builder.append(QbCommonImp.protectTableName(join.table));
 				builder.append(" ON ");
@@ -114,19 +101,7 @@ class QbSelectImp implements QbSelect
 		if (m_groupBy != null)
 		{
 			builder.append(" GROUP BY ");
-			
-			fieldCount = 0;
-			for (QbField field : m_groupBy)
-			{
-				builder.append(field.toString());
-
-				if (fieldCount != m_groupBy.length - 1)
-				{
-					builder.append(',');
-					builder.append(' ');
-				}
-				fieldCount++;
-			}
+			QbCommonImp.joinFieldNames(builder, m_groupBy);
 		}
 
 		if (m_havingClause != null)
@@ -135,20 +110,7 @@ class QbSelectImp implements QbSelect
 		if (m_orderBy != null)
 		{
 			builder.append(" ORDER BY ");
-			
-			fieldCount = 0;
-			for (QbField field : m_orderBy)
-			{
-				builder.append(field.toString());
-				
-				if (fieldCount != m_orderBy.length - 1)
-				{
-					builder.append(',');
-					builder.append(' ');
-				}
-				fieldCount++;
-			}
-
+			QbCommonImp.joinFieldNames(builder, m_orderBy);
 			builder.append(' ');
 			builder.append(m_orderByOrder.toString());
 		}
@@ -157,8 +119,7 @@ class QbSelectImp implements QbSelect
 		{
 			builder.append(" LIMIT ");
 			builder.append(m_offset);
-			builder.append(',');
-			builder.append(' ');
+			builder.append(", ");
 			builder.append(m_limit);
 		}
 			

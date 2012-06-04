@@ -81,14 +81,7 @@ class QbWhereImp implements QbWhere
 			if (whereInfo.m_inCount != 0)
 			{
 				builder.append(whereInfo.m_notIn ? " NOT IN (" : " IN (");
-				
-				for (int i = 0; i < whereInfo.m_inCount; i++)
-				{
-					if (i != whereInfo.m_inCount -1)
-						builder.append("?, ");
-					else
-						builder.append("?");
-				}
+				QbCommonImp.createPlaceholders(builder, whereInfo.m_inCount);
 				builder.append(')');
 				continue;
 			}

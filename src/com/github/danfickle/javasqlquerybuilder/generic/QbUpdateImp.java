@@ -36,14 +36,10 @@ class QbUpdateImp implements QbUpdate
 		for (QbField field : m_fields)
 		{
 			builder.append(field.toString());
-			builder.append('=');
-			builder.append("?");
+			builder.append("=?");
 
 			if (fieldCnt != m_fields.size() - 1)
-			{
-				builder.append(',');
-				builder.append(' ');
-			}
+				builder.append(", ");
 			fieldCnt++;
 		}
 		
