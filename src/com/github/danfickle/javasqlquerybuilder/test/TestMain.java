@@ -1,5 +1,7 @@
 package com.github.danfickle.javasqlquerybuilder.test;
 
+import java.sql.SQLException;
+
 import com.github.danfickle.javasqlquerybuilder.QbDelete;
 import com.github.danfickle.javasqlquerybuilder.QbFactory;
 import com.github.danfickle.javasqlquerybuilder.QbInsert;
@@ -16,7 +18,7 @@ import com.github.danfickle.javasqlquerybuilder.generic.QbFactoryImp;
  */
 public class TestMain
 {
-	public static void main(String... args)
+	public static void main(String... args) throws SQLException, ClassNotFoundException
 	{
 		QbFactory fac = new QbFactoryImp();
 		insertTests(fac);
@@ -25,6 +27,9 @@ public class TestMain
 		placeholderTests(fac);
 		whereTests(fac);
 		updateTests(fac);
+		
+		Sample.sample();
+		System.out.println("All tests passed.");
 	}
 
 	static void insertTests(QbFactory fac)
