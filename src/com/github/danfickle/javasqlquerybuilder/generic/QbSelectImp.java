@@ -135,7 +135,10 @@ class QbSelectImp implements QbSelect
 		
 		if (idx == 0 && m_where != null)
 			idx = m_where.getPlaceholderIndex(placeholderName);
-			
+		
+		if (idx == 0)
+			throw new IllegalArgumentException("Placeholder doesn't exist");
+		
 		return idx;
 	}
 

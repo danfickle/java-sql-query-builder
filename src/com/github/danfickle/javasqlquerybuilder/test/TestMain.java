@@ -27,6 +27,7 @@ public class TestMain
 		placeholderTests(fac);
 		whereTests(fac);
 		updateTests(fac);
+		exceptionTests(fac);
 		
 		Sample.sample();
 		System.out.println("All tests passed.");
@@ -286,5 +287,68 @@ public class TestMain
 			.all();
 		assert(up.getQueryString().equals("UPDATE `myTable` SET `gender` = ?"));
 		assert(up.getPlaceholderIndex(":gender") == 1);
+	}
+	
+	static void exceptionTests(QbFactory f)
+	{
+		exceptionTest1(f);
+		exceptionTest2(f);
+		exceptionTest3(f);
+	}
+
+	static void exceptionTest1(QbFactory f)
+	{
+		try
+		{
+			QbSelect sel = f.newSelectQuery();
+			sel.select(f.newStdField("id"))
+				.from("myTable")
+				.where()
+				.where(f.newStdField("id"), ":id");
+			assert(sel.getQueryString().equals("SELECT `id` FROM `myTable`  WHERE `id` = ?"));
+
+			// Non-existant placeholder, should throw IllegalArgumentException...
+			System.out.println(sel.getPlaceholderIndex("id"));
+		}
+		catch (IllegalArgumentException e)
+		{
+			return;
+		}
+		assert(false);
+	}
+	
+	static void exceptionTest2(QbFactory f)
+	{
+		try
+		{
+			QbUpdate up = f.newUpdateQuery(); 
+			up.set(f.newStdField("name"), ":placeholder");
+			up.inTable("myTable");
+			
+			// No where clause or call to all(). Should throw IllegalStateException...
+			up.getQueryString();
+		}
+		catch (IllegalStateException e)
+		{
+			return;
+		}
+		assert(false);
+	}
+	
+	static void exceptionTest3(QbFactory f)
+	{
+		try
+		{
+			QbInsert in = f.newInsertQuery(); 
+			in.set(f.newStdField("name"), ":placeholder");
+			
+			// No table name specified. Should throw IllegalStateException...
+			in.getQueryString();
+		}
+		catch (IllegalStateException e)
+		{
+			return;
+		}
+		assert(false);
 	}
 }
